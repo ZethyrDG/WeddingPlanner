@@ -1,0 +1,47 @@
+@model Wedding
+<h1>Welcome to Wedding Planner</h1>
+<a href="/logout">Log Out</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Wedding</th>
+      <th scope="col">Date</th>
+      <th scope="col">Guests</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+        @foreach(var wedding in @ViewBag.AllWeddings)
+        {
+        <tr>
+            <th scope="row"><a href="wedding/@wedding.WeddingId">@wedding.Wedder1.FirstName & @wedding.Wedder2.FirstName</a></th>
+            <td>@wedding.Date</td>
+            <td>@wedding.GuestList.Count</td>
+            @if(@wedding.Wedder1 == @ViewBag.ThisUser || @wedding.Wedder2 == @ViewBag.ThisUser)
+            {
+            <td><a href="delete/@wedding.WeddingId">Delete</a></td>
+            }
+            else
+            {
+                Boolean RSVP = true;
+                @foreach(var user in @wedding.GuestList)
+                {
+                  @if(@user.UserId == @ViewBag.ThisUser.UserId)
+                  {
+                      RSVP = false;
+                  }
+                }
+                @if(RSVP == false)
+                {
+                  <td><a href="unrsvp/@wedding.WeddingId">Un-RSVP</a></td>
+                }
+                @if(RSVP == true)
+                {
+                  <td><a href="rsvp/@wedding.WeddingId">RSVP</a></td>
+                }
+            }
+        </tr>
+        }
+  </tbody>
+</table>
+<a href="newwedding">New Wedding</a>

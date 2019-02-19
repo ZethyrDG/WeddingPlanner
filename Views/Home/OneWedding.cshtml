@@ -1,0 +1,12 @@
+@model Wedding
+<h1>@ViewBag.ThisWedding.Wedder1.FirstName and @ViewBag.ThisWedding.Wedder2.FirstName's Wedding</h1>
+<a href="/dashboard">Dashboard</a>
+<a href="/logout">Log Out</a>
+<p>@ViewBag.ThisWedding.Date</p>
+<ul>
+@foreach(var guest in @ViewBag.ThisWedding.GuestList)
+{
+    <li>@guest.User.FirstName</li>
+}
+</ul>
+<a href="https://www.google.com/maps/search/@ViewBag.ThisWedding.Address">@ViewBag.ThisWedding.Address</a>
