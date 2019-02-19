@@ -128,6 +128,8 @@ namespace WeddingPlanner.Controllers
         [HttpPost]
         public IActionResult AddWedding(Wedding NewWedding)
         {
+            if(ModelState.IsValid)
+            {
             User User1 = dbContext.user.FirstOrDefault(u => u.FirstName == NewWedding.Wedder1Name);
             User User2 = dbContext.user.FirstOrDefault(u => u.FirstName == NewWedding.Wedder2Name);
             NewWedding.Wedder1 = User1;
@@ -135,6 +137,11 @@ namespace WeddingPlanner.Controllers
             dbContext.wedding.Add(NewWedding);
             dbContext.SaveChanges();
             return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                return View("NewWedding");
+            }
         }
         [Route("wedding/{id}")]
         [HttpGet]
